@@ -1,3 +1,3 @@
 # Chatbot
 
-A Simple And Dumb Chatbot
+A Simple And Fun Chatbot
