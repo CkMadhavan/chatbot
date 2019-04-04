@@ -35,7 +35,7 @@ def index(process):
 
     model.compile(loss = "categorical_crossentropy" , optimizer = "adam")
 
-    model.load_weights('chat_2100.h5')
+    model.load_weights('chat_1700.h5')
     
     process = process.lower()
 
