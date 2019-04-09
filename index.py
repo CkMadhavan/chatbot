@@ -40,10 +40,11 @@ def index(process):
     process = process.lower()
 
     def pred(eng):
-        eng = eng.replace('?' , '')
+        if '?' in eng:
+            eng = eng.replace('?' , '')
         if eng != 'what_is_your_name' and eng != 'who_is_your_name' and eng != 'what_is_you' and eng != 'who_is_you' and eng != 'who_are_you':
             if eng != 'oh_ok' and eng != 'ok_then' and eng != 'okok' and eng != 'ok' and eng != 'ok_ok' and eng != 'done' and eng != 'ok_done': 
-                if eng != 'hi' and eng != 'hey_you' and eng!= 'hi_there' and eng!= 'hey_there' eng!= 'hey':
+                if eng != 'hi' and eng != 'hey_you' and eng!= 'hi_there' and eng!= 'hey_there' and eng!= 'hey':
                     reverse_word_map = dict(map(reversed,  t2.word_index.items()))
                     Z = t1.texts_to_sequences([eng])
                     Z = tf.keras.preprocessing.sequence.pad_sequences(Z , maxlen = Xlen , padding = 'post')
