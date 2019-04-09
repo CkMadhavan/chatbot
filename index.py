@@ -42,6 +42,7 @@ def index(process):
     def pred(eng):
         if '?' in eng:
             eng = eng.replace('?' , '')
+        eng.strip()
         if eng != 'what_is_your_name' and eng != 'who_is_your_name' and eng != 'what_is_you' and eng != 'who_is_you' and eng != 'who_are_you':
             if eng != 'oh_ok' and eng != 'ok_then' and eng != 'okok' and eng != 'ok' and eng != 'ok_ok' and eng != 'done' and eng != 'ok_done': 
                 if eng != 'hi' and eng != 'hey_you' and eng!= 'hi_there' and eng!= 'hey_there' and eng!= 'hey':
