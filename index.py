@@ -40,25 +40,28 @@ def index(process):
     process = process.lower()
 
     def pred(eng):
-
+        eng = eng.replace('?' , '')
         if eng != 'what_is_your_name' and eng != 'who_is_your_name' and eng != 'what_is_you' and eng != 'who_is_you' and eng != 'who_are_you':
             if eng != 'oh_ok' and eng != 'ok_then' and eng != 'okok' and eng != 'ok' and eng != 'ok_ok' and eng != 'done' and eng != 'ok_done': 
-                reverse_word_map = dict(map(reversed,  t2.word_index.items()))
-                Z = t1.texts_to_sequences([eng])
-                Z = tf.keras.preprocessing.sequence.pad_sequences(Z , maxlen = Xlen , padding = 'post')
-                Z = np.array(Z)
-                Z = Z.reshape(-1 , Xlen)
+                if eng != 'hi' and eng != 'hey_you' and eng!= 'hi_there' and eng!= 'hey_there' eng!= 'hey':
+                    reverse_word_map = dict(map(reversed,  t2.word_index.items()))
+                    Z = t1.texts_to_sequences([eng])
+                    Z = tf.keras.preprocessing.sequence.pad_sequences(Z , maxlen = Xlen , padding = 'post')
+                    Z = np.array(Z)
+                    Z = Z.reshape(-1 , Xlen)
 
-                p = model.predict(Z)[0]
+                    p = model.predict(Z)[0]
 
-                translated = []
+                    translated = []
 
-                for i in p:
-                    if np.argmax(i) != 0:
-                        translated.append(reverse_word_map[np.argmax(i)])
+                    for i in p:
+                        if np.argmax(i) != 0:
+                            translated.append(reverse_word_map[np.argmax(i)])
 
-                ger = (' ').join(translated)
-                return ger
+                    ger = (' ').join(translated)
+                    return ger
+                else:
+                    return "hello buddy"
             else :
                 return "good then"
         else :
