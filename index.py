@@ -9,7 +9,7 @@ app = Flask(__name__)
     
 @app.route('/<process>')
 def index(process):
-    
+    '''
     tf.keras.backend.clear_session()
     
     t1 = pickle.load(open('t1' , "rb"))
@@ -38,8 +38,9 @@ def index(process):
     model.load_weights('chat_1700.h5')
     
     process = process.lower()
-
+    '''
     def pred(eng):
+        '''
         eng = eng.replace('?' , ' ')
         eng = eng.strip('_')
         eng = eng.strip()
@@ -68,9 +69,9 @@ def index(process):
                 return "good then"
         else :
             return "i am saberbot"
-        
+        '''
     
-    return pred(process)
+    return "Well My Master Is Fixing Me So Lets Have A Conversation Afterwards . Sorry For The Inconvenience"
 
 if __name__ == "__main__":
     app.run()
