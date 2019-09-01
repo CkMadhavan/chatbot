@@ -9,69 +9,36 @@ app = Flask(__name__)
     
 @app.route('/<process>')
 def index(process):
-    '''
-    tf.keras.backend.clear_session()
+    keras.backend.clear_session()
     
-    t1 = pickle.load(open('t1' , "rb"))
-    t2 = pickle.load(open('t2' , "rb"))
+    t_inp = pickle.load(open('drive/My Drive/Colab Notebooks/Chatbot Simple/t_inp' , "rb"))
+    t_oup = pickle.load(open('drive/My Drive/Colab Notebooks/Chatbot Simple/t_oup' , "rb"))
 
-    Xlen = 15
-    Ylen = 15
+    Xlen = 24
+    Ylen = 53
 
-    Xvocab = len(t1.word_index) + 1
-    Yvocab = len(t2.word_index) + 1
+    Xvocab = len(t_inp.word_index) + 1
+    Yvocab = len(t_oup.word_index) + 1
 
-    n_units = 256
-    
-    model = tf.keras.models.Sequential()
+    model = keras.models.load_model('drive/My Drive/Colab Notebooks/Chatbot Simple/nmt-updated-data.h5')
 
-    model.add(Embedding(Xvocab, n_units, input_length=Xlen, mask_zero=True))
-    model.add(LSTM(n_units))
-    model.add(Dropout(0.2))
-    model.add(RepeatVector(Ylen))
-    model.add(LSTM(n_units , return_sequences=True))
-    model.add(Dropout(0.2))
-    model.add(TimeDistributed(Dense(Yvocab, activation='softmax')))
+    def prediction(inp1):
 
-    model.compile(loss = "categorical_crossentropy" , optimizer = "adam")
+      string = ["startseq " + inp1 +" endseq"]
+      pred_seq = t_inp.texts_to_sequences(string)
+      pred = pad_sequences(pred_seq , maxlen=Xlen,padding="post")
 
-    model.load_weights('chat_1700.h5')
-    
-    process = process.lower()
-    '''
-    def pred(eng):
-        '''
-        eng = eng.replace('?' , ' ')
-        eng = eng.strip('_')
-        eng = eng.strip()
-        if eng != 'what_is_your_name' and eng != 'who_is_your_name' and eng != 'what_is_you' and eng != 'who_is_you' and eng != 'who_are_you':
-            if eng != 'oh_ok' and eng != 'ok_then' and eng != 'okok' and eng != 'ok' and eng != 'ok_ok' and eng != 'done' and eng != 'ok_done': 
-                if eng != 'hi' and eng != 'hey_you' and eng!= 'hi_there' and eng!= 'hey_there' and eng!= 'hey':
-                    reverse_word_map = dict(map(reversed,  t2.word_index.items()))
-                    Z = t1.texts_to_sequences([eng])
-                    Z = tf.keras.preprocessing.sequence.pad_sequences(Z , maxlen = Xlen , padding = 'post')
-                    Z = np.array(Z)
-                    Z = Z.reshape(-1 , Xlen)
+      string1 = ["startseq"]
 
-                    p = model.predict(Z)[0]
+      while string1[0][-6:] != "endseq":
 
-                    translated = []
+        pred_seq1 = t_oup.texts_to_sequences(string1)
+        pred1 = pad_sequences(pred_seq1 , maxlen=Ylen,padding="post")
 
-                    for i in p:
-                        if np.argmax(i) != 0:
-                            translated.append(reverse_word_map[np.argmax(i)])
+        prediction = model.predict([pred[0].reshape(1,Xlen) , pred1[0].reshape(1,Ylen)])
+        string1[0] += ' ' + list(t_oup.word_index.keys())[list(t_oup.word_index.values()).index(np.argmax(prediction[0]))]
 
-                    ger = (' ').join(translated)
-                    return ger
-                else:
-                    return "hello buddy"
-            else :
-                return "good then"
-        else :
-            return "i am saberbot"
-        '''
-    
-    return "Well My Master Is Fixing Me So Lets Have A Conversation Afterwards . Sorry For The Inconvenience"
+      print("     " + string1[0][9:-7])
 
 if __name__ == "__main__":
     app.run()
