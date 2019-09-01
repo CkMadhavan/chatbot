@@ -11,8 +11,8 @@ app = Flask(__name__)
 def index(process):
     keras.backend.clear_session()
     
-    t_inp = pickle.load(open('drive/My Drive/Colab Notebooks/Chatbot Simple/t_inp' , "rb"))
-    t_oup = pickle.load(open('drive/My Drive/Colab Notebooks/Chatbot Simple/t_oup' , "rb"))
+    t_inp = pickle.load(open('t_inp' , "rb"))
+    t_oup = pickle.load(open('t_oup' , "rb"))
 
     Xlen = 24
     Ylen = 53
@@ -20,7 +20,7 @@ def index(process):
     Xvocab = len(t_inp.word_index) + 1
     Yvocab = len(t_oup.word_index) + 1
 
-    model = keras.models.load_model('drive/My Drive/Colab Notebooks/Chatbot Simple/nmt-updated-data.h5')
+    model = keras.models.load_model('nmt-updated-data.h5')
 
     def prediction(inp1):
 
