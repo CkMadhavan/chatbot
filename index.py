@@ -1,7 +1,8 @@
-import tensorflow as tf
+import keras
+from keras.preprocessing.text import Tokenizer
+from keras.utils import to_categorical
+from keras.preprocessing.sequence import pad_sequences
 import numpy as np
-from tensorflow.keras.layers import Embedding , Dense , LSTM , TimeDistributed , RepeatVector , Dropout , Input
-from tensorflow.keras.models import Sequential
 import pickle
 from flask import Flask
 
