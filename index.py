@@ -41,7 +41,7 @@ def index(process):
     process = process.replace('>' , '')
     process = process.replace(';' , '')
     process = process.replace(':' , '')
-    process = process.replace(' ' , '-')
+    process = process.replace('_' , ' ')
     
     string = ["startseq " + process +" endseq"]
     pred_seq = t_inp.texts_to_sequences(string)
