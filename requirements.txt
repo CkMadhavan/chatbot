@@ -1,5 +1,5 @@
 flask==1.0.2
 gunicorn==19.9.0
-tensorflow==1.12.0
+tensorflow==1.12.2
 numpy
 keras
