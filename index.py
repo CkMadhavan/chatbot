@@ -7,21 +7,22 @@ import pickle
 from flask import Flask
 
 app = Flask(__name__)
+
+keras.backend.clear_session()
+    
+t_inp = pickle.load(open('t_inp' , "rb"))
+t_oup = pickle.load(open('t_oup' , "rb"))
+
+Xlen = 24
+Ylen = 53
+
+Xvocab = len(t_inp.word_index) + 1
+Yvocab = len(t_oup.word_index) + 1
+
+model = keras.models.load_model('nmt-updated-data.h5')
     
 @app.route('/<process>')
 def index(process):
-    keras.backend.clear_session()
-    
-    t_inp = pickle.load(open('t_inp' , "rb"))
-    t_oup = pickle.load(open('t_oup' , "rb"))
-
-    Xlen = 24
-    Ylen = 53
-
-    Xvocab = len(t_inp.word_index) + 1
-    Yvocab = len(t_oup.word_index) + 1
-
-    model = keras.models.load_model('nmt-updated-data.h5')
 
     process = process.lower()
     process = process.replace('?' , '')
