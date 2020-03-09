@@ -6,7 +6,10 @@ import numpy as np
 import pickle
 from flask import Flask
 
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 keras.backend.clear_session()
     
@@ -22,6 +25,7 @@ Yvocab = len(t_oup.word_index) + 1
 model = keras.models.load_model('nmt-updated-data.h5')
     
 @app.route('/<process>')
+@cross_origin()
 def index(process):
 
     process = process.lower()
