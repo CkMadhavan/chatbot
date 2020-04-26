@@ -91,7 +91,7 @@ def clean_doc(docs , l=True):
 def index(process):
     
     process = clean_doc([process])
-    return prediction(model , process[0])
+    return prediction(model , process[0])[9:-7]
 
 if __name__ == "__main__":
     app.run()
